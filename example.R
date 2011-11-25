@@ -1,6 +1,6 @@
 library(ggplot2)
 
-source('/Users/jcolby/Dropbox/UMCD.R')
+source('/Users/jcolby/Dropbox/R UMCD/UMCD.R')
 
 # Setup requests
 network_names = umcdListNetworks('ADHD200_CC200')$networks
@@ -21,6 +21,7 @@ results$info = results$info[,-7]
 results$info$age = as.numeric(gsub('(.+)-.+', '\\1', results$info$`Age Range`))
 results$info$group = factor(ifelse(grepl('ADHD', results$info$`Subject Pool`), 'ADHD', 'TD'))
 results$global.measures = results$global.measures[!is.infinite(results$global.measures$value), ]
+results$global.measures = with(results, join(global.measures, info[,c(1,7,8)]))
 
 # Check for group differences in all global metrics
 ddply(results$global.measures, 'measure', function(x) summary(lm(value ~ group, data=x))$coef[2,])

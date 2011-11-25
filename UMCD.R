@@ -80,6 +80,8 @@ umcdAnalyze <- function(requests, ...) {
   
   # Format output
   colnames(info) = info.table[[1]]
+  colnames(info)[1] = 'network_name'
+  info$network_name = as.character(info$network_name)
   colnames(global.measures)[6:7] = c('measure', 'value')
   global.measures$value = as.numeric(as.character(global.measures$value))
   global.measures = subset(global.measures, !measure %in% c('Chosen Density (%)', 'Small World Attributes'))
