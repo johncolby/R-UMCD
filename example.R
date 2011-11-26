@@ -1,6 +1,6 @@
 library(ggplot2)
 
-source('/Users/jcolby/Dropbox/R UMCD/UMCD.R')
+source('/path/to/UMCD.R')
 
 # Setup requests
 network_names = umcdListNetworks('ADHD200_CC200')$networks
