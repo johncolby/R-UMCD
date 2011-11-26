@@ -2,7 +2,7 @@ library(XML)
 library(RCurl)
 
 # Login to UMCD to enable access to private data
-umcdLogin <- function(curl, email=NULL, password=NULL) {
+umcdLogin <- function(curl, email, password) {
   login.url = 'http://jessebrown.webfactional.com/user/login'
   login.html = getURL(login.url, curl=curl)
   formkey = xmlAttrs(xmlRoot(htmlTreeParse(login.html))[['body']][[2]][[1]][[3]][[2]][[1]][['form']][[2]][[2]])[['value']]
