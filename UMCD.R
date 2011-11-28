@@ -16,13 +16,13 @@ umcdLogin <- function(curl, email, password) {
 }
 
 # List available network names for a given study name
-umcdListNetworks <- function(study_name, ...) {
+umcdListNetworks <- function(study_name, curl=NULL, email=NULL, password=NULL) {
   # Get curl handle
-  if(!exists('curl'))
+  if(is.null(curl))
     curl = getCurlHandle(.opts=list(followlocation=TRUE, cookiefile='', verbose=F))
   
   # Login
-  if(exists('email') & exists('password'))
+  if(!(is.null(email) & is.null(password)))
     umcdLogin(curl, email, password)
   
   html = getForm('http://jessebrown.webfactional.com/study_networks', study_name=study_name, curl=curl)
@@ -31,13 +31,13 @@ umcdListNetworks <- function(study_name, ...) {
 }
 
 # Compile UMCD analysis data for a set of requests
-umcdAnalyze <- function(requests, ...) {
+umcdAnalyze <- function(requests, curl=NULL, email=NULL, password=NULL) {
   # Get curl handle
-  if(!exists('curl'))
-    curl = getCurlHandle(.opts=list(followlocation=TRUE, cookiefile='~/cookies', verbose=F))
-
+  if(is.null(curl))
+    curl = getCurlHandle(.opts=list(followlocation=TRUE, cookiefile='', verbose=F))
+  
   # Login
-  if(exists('email') & exists('password'))
+  if(!(is.null(email) & is.null(password)))
     umcdLogin(curl, email, password)
   
   pb = txtProgressBar(0, nrow(requests), 0, style=3)
