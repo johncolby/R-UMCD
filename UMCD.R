@@ -80,6 +80,7 @@ umcdAnalyze <- function(requests, curl=NULL) {
   colnames(info)[1] = 'network_name'
   info$network_name = as.character(info$network_name)
   colnames(global.measures)[6:7] = c('measure', 'value')
+  global.measures$measure = gsub('(.+)  \\?', '\\1', global.measures$measure)
   global.measures$value = as.numeric(as.character(global.measures$value))
   global.measures = subset(global.measures, !measure %in% c('Chosen Density (%)', 'Small World Attributes'))
   colnames(nodal.measures)[6:11] = gsub('X\\.(.+)', '\\1', colnames(nodal.measures)[6:11])
@@ -91,7 +92,7 @@ umcdAnalyze <- function(requests, curl=NULL) {
 umcdBrowse <- function(curl=NULL) {
   # Get curl handle
   if(is.null(curl))
-    curl = getCurlHandle(.opts=list(followlocation=TRUE, cookiefile='', verbose=F))
+    curl = umcdLogin()
   
   browse.html = getURL('http://jessebrown.webfactional.com/browse', curl=curl)
   readHTMLTable(browse.html)[[2]]
